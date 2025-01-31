@@ -12,7 +12,7 @@ def setvar(name , type , value):
       if type == "int":
          value = int(value)
          vars.update({name : value})
-      elif type == "str" or type == "" or type== " ":
+      elif type == "str" :
          value = str(value)
          vars.update({name : value})
       elif type == "float":
@@ -31,7 +31,7 @@ def printer(args):
    global total_arg
    try:
       for arg in args:
-         if arg == '*last_input':
+         if arg == '&last_input':
             total_arg += input_text + " "
          else:
             total_arg += arg + " "
@@ -66,7 +66,7 @@ while True:
          namedel = input("name_var>>")
          delvar(namedel)
       elif com == "input":
-         input_text=""
+         input_text= ""
          input_text = input("input>> ")
       elif com == "clear":
          os.system("cls")
