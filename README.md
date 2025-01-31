@@ -11,15 +11,17 @@ Functions in cosole:
 
     delvar:
             first argument - name of the variable you want to delete.
-
-    vars_list:
-            Doesn't require an argument. 
-            Outputs a list of all existing variables
     
     print:
             first argument - print argument.
             You can enter arguments until you enter an empty string
             If you enter    &last_input    you will output the last input request by the user
+            You can enter a command after the % sign.
+                The following commands are currently available:
+                        %vars_list - list of variables
+                        %last_input - last input from the user
+                        %variable_name - value of the output variable
+
 
     input:
             Requests input from user
