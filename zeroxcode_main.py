@@ -4,9 +4,11 @@ com = 0
 vars = {}
 arg = 0
 args = []
+narg = ""
 pr_temp = ""
 total_arg = ""
 input_text = ""
+
 def setvar(name , type , value):
    try:
       if type == "int":
@@ -28,17 +30,26 @@ def delvar(delit):
       print("Error. Variable not found")
 
 def printer(args):
-   global total_arg
    try:
+      global total_arg , arg , narg
       for arg in args:
-         if arg == '&last_input':
-            total_arg += input_text + " "
+         if arg.startswith("%") == True:
+            narg = arg[1:]
+            if narg in vars:
+               total_arg += str(vars[narg]) + " "
+            elif narg == "last_input":
+               total_arg += input_text + " "
+            elif narg == "vars_list":
+               for keys in vars.keys():
+                  print(keys , end=" ")
+                  print("" , sep="\n")
          else:
-            total_arg += arg + " "
+            total_arg += str(arg) + " "
       print(total_arg)
+      total_arg = ""
    except:
-      print("Error. Main process: print ")
-
+      print("Error. Main process: print")
+   
 os.system("cls")
 print("ZeroxCode v.0.0.1_alpha for x64")
 while True:
@@ -49,6 +60,8 @@ while True:
       elif com.startswith("#") == True:
          continue
       elif com == "print":
+         args = []
+         arg = "h"
          while arg != "":
             arg = input("argument>>")
             args.append(arg)
@@ -58,10 +71,6 @@ while True:
          var_type = input("var_type>>")
          var_value = input("var_value>>")
          setvar(var_name, var_type, var_value)
-      elif com == "vars_list":
-         for keys in vars.keys():
-            print(keys , end=" ")
-         print("" , sep="\n")
       elif com == "delvar":
          namedel = input("name_var>>")
          delvar(namedel)
