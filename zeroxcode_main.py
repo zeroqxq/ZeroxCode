@@ -77,6 +77,26 @@ while True:
       elif com == "input":
          input_text= ""
          input_text = input("input>> ")
+      elif com == "max_var":
+         var1name = input("var1_name>>")
+         var2name = input("var2_name>>")
+         if (var1name in vars and var2name in vars):
+            temp1v = vars[var1name]
+            temp2v = vars[var2name]
+            if isinstance(temp1v , int) and isinstance(temp2v , int):
+               maxvar = max(temp2v, temp1v)
+               if maxvar in vars.values():
+                     pass
+               
+               temp1v = ""
+               temp2v = ""
+            else:
+               print("Error. The variable type is not an int type")
+               temp1v = ""
+               temp2v = ""
+         else:
+            print("These variables do not exist")
+
       elif com == "clear":
          os.system("cls")
          print("ZeroxCode v.0.0.1_alpha for x64")
