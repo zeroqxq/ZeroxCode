@@ -8,7 +8,33 @@ narg = ""
 pr_temp = ""
 total_arg = ""
 input_text = ""
-
+def comiler(f):
+   file_opened = open(path , "r")
+   file_read = file_opened.read().split("\n")
+   for line in file_read:
+            if line.startswith("#"):
+                continue
+            elif line.strip(" ") == "":
+                continue
+            else:
+               line_list = line.split(";", maxsplit = 1 )
+               if len(line_list) < 2:
+                  print("Incorrect command format")
+               func = line_list[0]
+               args = line_list[1]
+               args = args.strip()
+               args = line_list[1].split("/")
+               for arg in args:
+                  arg = arg.strip()
+               arg = "n"
+               func = func.strip()
+               
+               if func == "print":
+                  printer(args)
+               if func == "setvar":
+                  setvar(args[0] , args[1], args[2])
+                  
+               #print("Error: Incorrect name command")
 def setvar(name , type , value):
    try:
       if name != "" or name.startswith(" "): 
@@ -27,7 +53,7 @@ def setvar(name , type , value):
          print("A variable cannot start with a space or contain spaces, nor can the variable name be empty.")
    except Exception as e:
       print(f'Error. Main process: setvar. Description: {e}')
-def inputer(text , svar):
+def inputer(text , svar = "last_input"):
    global input_text , save_var
    if text != "" or text != " ":
       if save_var in vars:
@@ -39,8 +65,7 @@ def delvar(delit):
       vars.pop(delit)
    except:
       print("Error. Variable not found")
-
-def printer(args):
+def printer(args: list):
    try:
       global total_arg , arg , narg
       for arg in args:
@@ -48,8 +73,6 @@ def printer(args):
             narg = arg[1:]
             if narg in vars:
                total_arg += str(vars[narg]) + " "
-            elif narg == "last_input":
-               total_arg += input_text + " "
             elif narg == "vars_list":
                for keys in vars.keys():
                   print(keys , end=" ")
@@ -59,7 +82,7 @@ def printer(args):
                   print(key , " : " , value, end=" ; ")
                   print("" , end="\n")
          else:
-            total_arg += str(arg) + " "
+            total_arg += arg + " "
       print(total_arg)
       total_arg = ""
    except Exception as e:
@@ -118,7 +141,6 @@ while True:
                print("These variables do not exist")
          except Exception as e:
             print(f"Error. Procces: max_var. Description: {e}")
-
       elif com == "min_var":
          try:
             var1name = input("var1_name>>")
@@ -148,6 +170,24 @@ while True:
          print("ZeroxCode v.0.0.1_alpha for x64")
       elif com == "exit":
          raise SystemExit(0)
+      elif com == "math_var":
+         try:
+            var1 = input("Var1_name>>")
+            sym = input("symbol>>")
+            var2 = input("Var2_name>>")
+            if (var1 in vars) and (var2 in vars):
+               var1d = vars[var1]
+               var2d = vars[var2]
+               ev = var1 + sym + var2
+               print(eval(ev))
+            else:
+               print("Invalid variable name")
+         except Exception as e:
+            print(f"Error. Process: math_vars. Description {e}")
+      elif com == "open":
+         path = input("path (replace \\ to \\\\)>> ")
+         comiler(path)
+
       else:
          print("Error: Incorrect name command")
    except SystemExit:
