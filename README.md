@@ -1,9 +1,9 @@
 # ZeroxCode
-Error feedback - [text](https://forms.gle/x1yTLedLwUqUezuZ7)\
+Error feedback - [click](https://forms.gle/x1yTLedLwUqUezuZ7)\
 
-Evaluation of application - [text](https://forms.gle/7mwg8rYfstwtAniG6)
+Evaluation of application - [click](https://forms.gle/7mwg8rYfstwtAniG6)
 
-Telegram channel - [text](https://t.me/+kLy8wjlzI7xlOWM6)
+Telegram channel - [click](https://t.me/+kLy8wjlzI7xlOWM6)
 
 
 To run the program open - zeroxcode_main.exe.
