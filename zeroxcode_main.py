@@ -38,6 +38,8 @@ def comiler(f):
                elif func == "input":
                   itext = input()
                   inputer(itext, args[0])
+               elif func == 'math':
+
                #print("Error: Incorrect name command")
 def setvar(name , type , value):
    try:
@@ -92,7 +94,20 @@ def printer(args: list):
       total_arg = ""
    except Exception as e:
       print(f"Error. Main process: print. Description: {e}")
-   
+def math_var(v1n , s , v2n):
+   try:
+      if (v1n in vars) and (v2n in vars):
+         var1d = vars[var1]
+         var2d = vars[var2]
+         ev = var1 + s + var2
+         print(eval(ev))
+      else:
+         print("Invalid variable name")  
+   except Exception as e:
+            print(f"Error[a003] Process: math_vars. Description {e}")
+def math(n1 , s , n2):
+   #доделать
+   pass
 os.system("cls")
 print("ZeroxCode v.0.0.1_alpha for x64")
 while True:
@@ -176,19 +191,14 @@ while True:
       elif com == "exit":
          raise SystemExit(0)
       elif com == "math_var":
-         try:
-            var1 = input("Var1_name>>")
-            sym = input("symbol>>")
-            var2 = input("Var2_name>>")
-            if (var1 in vars) and (var2 in vars):
-               var1d = vars[var1]
-               var2d = vars[var2]
-               ev = var1 + sym + var2
-               print(eval(ev))
-            else:
-               print("Invalid variable name")
-         except Exception as e:
-            print(f"Error. Process: math_vars. Description {e}")
+            var1 = input("var1_name>>")
+            symb = input("symbol>>")
+            var2 = input("var2_name>>")
+            math_var(var1 , symb , var2)
+      elif com == "math":
+         n1 = input("number1>>")
+         symbm = input("symbol>>")
+         n2 = input("number2>>")
       elif com == "open":
          path = input("path (replace \\ to \\\\)>> ")
          comiler(path)
