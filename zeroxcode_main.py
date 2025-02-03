@@ -39,8 +39,10 @@ def comiler(f):
                   itext = input()
                   inputer(itext, args[0])
                elif func == 'math':
-
-               #print("Error: Incorrect name command")
+                  math(args[0], args[1], args[2])
+               elif func == "tof":
+                  tof(args[0], args[1], args[2])
+#"Error: Incorrect name command"
 def setvar(name , type , value):
    try:
       if name != "" or name.startswith(" "): 
@@ -59,12 +61,14 @@ def setvar(name , type , value):
          print("A variable cannot start with a space or contain spaces, nor can the variable name be empty.")
    except Exception as e:
       print(f'Error. Main process: setvar. Description: {e}')
+
 def inputer(text , svar = "last_input"):
    if text != "" or text != " ":
       if svar in vars:
          vars.update({svar : text})
       else:
          vars.update({svar : text})
+
 def delvar(delit):
    try:
       vars.pop(delit)
@@ -106,10 +110,37 @@ def math_var(v1n , s , v2n):
    except Exception as e:
             print(f"Error[a003] Process: math_vars. Description {e}")
 def math(n1 , s , n2):
-   #доделать
+   ev = n1 + s + n2
+   print(eval(ev))
    pass
+   pass
+
+def tof(nov1 , s , nov2):
+   if nov1 in vars:
+      v1 = vars[nov1]
+      if isinstance(v1 , int) == False:
+         raise TypeError("A variable containing a number must be entered")
+   if nov2 in vars:
+      v2 = vars[nov1]
+      if isinstance(v2 , int) == False:
+         raise TypeError("A variable containing a number must be entered")
+   if s == "=":
+      if nov1 == nov2:
+         print("True")
+      else:
+         print("False")
+   if s == ">":
+      if nov1>nov2:
+         print("True")
+      else:
+         print("False")
+   if s == "<":
+      if nov1<nov2:
+         print("True")
+      else:
+         print("False")
 os.system("cls")
-print("ZeroxCode v.0.0.1_alpha for x64")
+print("ZeroxCode v.0.0.2_alpha for x64")
 while True:
    try:
       com = input(">> ")
@@ -202,7 +233,11 @@ while True:
       elif com == "open":
          path = input("path (replace \\ to \\\\)>> ")
          comiler(path)
-
+      elif com == "tof":
+         a1 = input("var1 or number1>>")
+         csi = input("mark>>")
+         a2 = input("var2 or number2>>")
+         tof(a1,csi,a2)
       else:
          print("Error[n002]: Incorrect name command")
    except SystemExit:
