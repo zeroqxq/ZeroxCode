@@ -4,11 +4,13 @@ com = 0
 vars = {}
 arg = 0
 args = []
+redcom = ""
 narg = ""
 pr_temp = ""
 total_arg = ""
 input_text = ""
 def comiler(f):
+   global redcom
    file_opened = open(path , "r")
    file_read = file_opened.read().split("\n")
    for line in file_read:
@@ -24,16 +26,18 @@ def comiler(f):
                args = line_list[1]
                args = args.strip()
                args = line_list[1].split("/")
-               for arg in args:
-                  arg = arg.strip()
-               arg = "n"
+               l = args[0].strip()
+               args[0] = l
                func = func.strip()
-               
                if func == "print":
                   printer(args)
-               if func == "setvar":
+               elif func == "setvar":
                   setvar(args[0] , args[1], args[2])
-                  
+               elif func == "delvar":
+                  delvar(args[0])
+               elif func == "input":
+                  itext = input()
+                  inputer(itext, args[0])
                #print("Error: Incorrect name command")
 def setvar(name , type , value):
    try:
@@ -54,9 +58,8 @@ def setvar(name , type , value):
    except Exception as e:
       print(f'Error. Main process: setvar. Description: {e}')
 def inputer(text , svar = "last_input"):
-   global input_text , save_var
    if text != "" or text != " ":
-      if save_var in vars:
+      if svar in vars:
          vars.update({svar : text})
       else:
          vars.update({svar : text})
@@ -71,16 +74,18 @@ def printer(args: list):
       for arg in args:
          if arg.startswith("%") == True:
             narg = arg[1:]
+            narg = str(narg)
+            narg = narg.strip()
             if narg in vars:
                total_arg += str(vars[narg]) + " "
             elif narg == "vars_list":
                for keys in vars.keys():
-                  print(keys , end=" ")
-                  print("" , end="\n")
+                  print(keys , end=" ; ")
+               print("" , end="\n")
             elif narg == "vars_items":
                for key,value in vars.items():
                   print(key , " : " , value, end=" ; ")
-                  print("" , end="\n")
+               print("" , end="\n")
          else:
             total_arg += arg + " "
       print(total_arg)
@@ -189,9 +194,9 @@ while True:
          comiler(path)
 
       else:
-         print("Error: Incorrect name command")
+         print("Error[n002]: Incorrect name command")
    except SystemExit:
       raise SystemExit(0)
    except Exception as e:
-        print(f"Error. Description - {e}")
+        print(f"Error[a001].  Description - {e}")
 
