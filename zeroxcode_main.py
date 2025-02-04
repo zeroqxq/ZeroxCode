@@ -39,9 +39,18 @@ def comiler(f):
                   itext = input()
                   inputer(itext, args[0])
                elif func == 'math':
-                  math(args[0], args[1], args[2])
+                  if len(args) == 3:
+                     math(args[0], args[1], args[2])
+                  elif len(args) == 4:
+                     math(args[0], args[1], args[2], args[3])
                elif func == "tof":
-                  tof(args[0], args[1], args[2])
+                  if len(args) == 3:
+                     tof(args[0], args[1], args[2])
+                  elif len(args) == 4:
+                     tof(args[0], args[1], args[2], args[3])
+
+
+               
 #"Error: Incorrect name command"
 def setvar(name , type , value):
    try:
@@ -109,36 +118,48 @@ def math_var(v1n , s , v2n):
          print("Invalid variable name")  
    except Exception as e:
             print(f"Error[a003] Process: math_vars. Description {e}")
-def math(n1 , s , n2):
+def math(n1 , s , n2 , sv="last_math"):
    ev = n1 + s + n2
-   print(eval(ev))
-   pass
-   pass
-
-def tof(nov1 , s , nov2):
+   res = eval(ev)
+   print(res)
+   vars.update({sv:res})
+def tof(nov1 , s , nov2, vret="last_tof"):
+   ret = ""
+   
    if nov1 in vars:
       v1 = vars[nov1]
       if isinstance(v1 , int) == False:
          raise TypeError("A variable containing a number must be entered")
+   else:
+      nov1 = int(nov1)
    if nov2 in vars:
       v2 = vars[nov1]
       if isinstance(v2 , int) == False:
          raise TypeError("A variable containing a number must be entered")
+   else:
+      nov2 = int(nov2)
    if s == "=":
       if nov1 == nov2:
-         print("True")
+         ret = "True"
+         print(ret)
       else:
-         print("False")
+         ret = "False"
+         print(ret)
    if s == ">":
       if nov1>nov2:
-         print("True")
+         ret = "True"
+         print(ret)
       else:
-         print("False")
+         ret = "False"
+         print(ret)
    if s == "<":
       if nov1<nov2:
-         print("True")
+         ret = "True"
+         print(ret)
       else:
-         print("False")
+         ret = "False"
+         print(ret)
+   vars.update({vret : ret})
 os.system("cls")
 print("ZeroxCode v.0.0.2_alpha for x64")
 while True:
