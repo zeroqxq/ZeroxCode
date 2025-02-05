@@ -5,15 +5,17 @@ vars = {}
 arg = 0
 args = []
 redcom = ""
+npe = False
 narg = ""
 pr_temp = ""
 total_arg = ""
 input_text = ""
 def comiler(f):
-   global redcom
+   global redcom, npe
    file_opened = open(path , "r")
    file_read = file_opened.read().split("\n")
    for line in file_read:
+            
             if line.startswith("#"):
                 continue
             elif line.strip(" ") == "":
@@ -48,6 +50,9 @@ def comiler(f):
                      tof(args[0], args[1], args[2])
                   elif len(args) == 4:
                      tof(args[0], args[1], args[2], args[3])
+   if npe == False:
+      print()
+      print("[End of run file]")
 
 
                
@@ -107,61 +112,60 @@ def printer(args: list):
       total_arg = ""
    except Exception as e:
       print(f"Error. Main process: print. Description: {e}")
-def math_var(v1n , s , v2n):
-   try:
-      if (v1n in vars) and (v2n in vars):
-         var1d = vars[var1]
-         var2d = vars[var2]
-         ev = var1 + s + var2
-         print(eval(ev))
-      else:
-         print("Invalid variable name")  
-   except Exception as e:
-            print(f"Error[a003] Process: math_vars. Description {e}")
 def math(n1 , s , n2 , sv="last_math"):
-   ev = n1 + s + n2
-   res = eval(ev)
-   print(res)
-   vars.update({sv:res})
+   #try:
+      if n1 in vars:
+            nu1 = vars.get(n1)
+            nu1 =str(nu1)
+      else:
+         nu1 = n1
+         nu1 = str(nu1)
+      if n2 in vars:
+         nu2 = vars.get(n2)
+         nu2 = str(nu2)
+      else:
+         nu2 = n2
+         nu2 = str(nu2)
+      
+      ev = nu1 + s + nu2
+      res = eval(ev)
+      vars.update({sv:res})
+   #except Exception as e:
+      #print(f"Error[m01] math: Description - {e}")
+
 def tof(nov1 , s , nov2, vret="last_tof"):
    ret = ""
    
    if nov1 in vars:
-      v1 = vars[nov1]
+      v1 = vars.get(nov1)
       if isinstance(v1 , int) == False:
          raise TypeError("A variable containing a number must be entered")
    else:
-      nov1 = int(nov1)
+      v1 = int(nov1)
    if nov2 in vars:
-      v2 = vars[nov1]
+      v2 = vars.get(nov2)
       if isinstance(v2 , int) == False:
          raise TypeError("A variable containing a number must be entered")
    else:
-      nov2 = int(nov2)
+      v2 = int(nov2)
    if s == "=":
-      if nov1 == nov2:
-         ret = "True"
-         print(ret)
+      if v1 == v2:
+         ret = True
       else:
-         ret = "False"
-         print(ret)
+         ret = False
    if s == ">":
-      if nov1>nov2:
-         ret = "True"
-         print(ret)
+      if v1>v2:
+         ret = True
       else:
-         ret = "False"
-         print(ret)
+         ret = False
    if s == "<":
-      if nov1<nov2:
-         ret = "True"
-         print(ret)
+      if v1<v2:
+         ret = True
       else:
-         ret = "False"
-         print(ret)
+         ret = False
    vars.update({vret : ret})
 os.system("cls")
-print("ZeroxCode v.0.0.2_alpha for x64")
+print("ZeroxCode v.0.0.3_alpha for x64")
 while True:
    try:
       com = input(">> ")
@@ -242,11 +246,6 @@ while True:
          print("ZeroxCode v.0.0.1_alpha for x64")
       elif com == "exit":
          raise SystemExit(0)
-      elif com == "math_var":
-            var1 = input("var1_name>>")
-            symb = input("symbol>>")
-            var2 = input("var2_name>>")
-            math_var(var1 , symb , var2)
       elif com == "math":
          n1 = input("number1>>")
          symbm = input("symbol>>")
