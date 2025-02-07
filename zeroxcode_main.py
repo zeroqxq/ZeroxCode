@@ -5,28 +5,28 @@ vars = {}
 arg = 0
 args = []
 redcom = ""
-npe = False
 narg = ""
 pr_temp = ""
 total_arg = ""
 input_text = ""
+bannedfunc = []
 def comiler(f):
-   global redcom, npe
-   file_opened = open(path , "r")
+   if "compiler" in bannedfunc:
+      raise Exception("Function banned")
+   global redcom, npe , vars
+   file_opened = open(f , "r")
    file_read = file_opened.read().split("\n")
    for line in file_read:
             
             if line.startswith("#"):
                 continue
-            elif line.strip(" ") == "":
+            elif line.strip() == "":
                 continue
             else:
-               line_list = line.split(";", maxsplit = 1 )
+               line_list = line.split(";" , maxsplit=1)
                if len(line_list) < 2:
                   print("Incorrect command format")
-               func = line_list[0]
-               args = line_list[1]
-               args = args.strip()
+               func = line_list[0].strip()
                args = line_list[1].split("/")
                l = args[0].strip()
                args[0] = l
@@ -50,14 +50,11 @@ def comiler(f):
                      tof(args[0], args[1], args[2])
                   elif len(args) == 4:
                      tof(args[0], args[1], args[2], args[3])
-   if npe == False:
-      print()
-      print("[End of run file]")
-
-
-               
-#"Error: Incorrect name command"
+               elif func == "vars_clear":
+                  vars = {}
 def setvar(name , type , value):
+   if "setvar" in bannedfunc:
+      raise Exception("Function banned")
    try:
       if name != "" or name.startswith(" "): 
          if type == "int":
@@ -75,20 +72,24 @@ def setvar(name , type , value):
          print("A variable cannot start with a space or contain spaces, nor can the variable name be empty.")
    except Exception as e:
       print(f'Error. Main process: setvar. Description: {e}')
-
 def inputer(text , svar = "last_input"):
+   if "input" in bannedfunc:
+      raise Exception("Function banned")
    if text != "" or text != " ":
       if svar in vars:
          vars.update({svar : text})
       else:
          vars.update({svar : text})
-
 def delvar(delit):
    try:
+      if "delvar" in bannedfunc:
+         raise Exception("Function banned")
       vars.pop(delit)
    except:
       print("Error. Variable not found")
 def printer(args: list):
+   if "print" in bannedfunc:
+      raise Exception("Function banned")
    try:
       global total_arg , arg , narg
       for arg in args:
@@ -113,6 +114,8 @@ def printer(args: list):
    except Exception as e:
       print(f"Error. Main process: print. Description: {e}")
 def math(n1 , s , n2 , sv="last_math"):
+      if "math" in bannedfunc:
+         raise Exception("Function banned")
    #try:
       if n1 in vars:
             nu1 = vars.get(n1)
@@ -132,8 +135,9 @@ def math(n1 , s , n2 , sv="last_math"):
       vars.update({sv:res})
    #except Exception as e:
       #print(f"Error[m01] math: Description - {e}")
-
 def tof(nov1 , s , nov2, vret="last_tof"):
+   if "tof" in bannedfunc:
+      raise Exception("Function banned")
    ret = ""
    
    if nov1 in vars:
@@ -244,6 +248,8 @@ while True:
       elif com == "clear":
          os.system("cls")
          print("ZeroxCode v.0.0.1_alpha for x64")
+      elif com == "vars_clear":
+         vars = {}
       elif com == "exit":
          raise SystemExit(0)
       elif com == "math":
@@ -258,10 +264,16 @@ while True:
          csi = input("mark>>")
          a2 = input("var2 or number2>>")
          tof(a1,csi,a2)
+      elif com == "ban":
+         fb = "n"
+         while fb != "":
+            fb = input("func_name>>")
+            bannedfunc.append(fb)
       else:
          print("Error[n002]: Incorrect name command")
    except SystemExit:
       raise SystemExit(0)
    except Exception as e:
-        print(f"Error[a001].  Description - {e}")
+      print(f"Main error. Description - {e}")
+
 
