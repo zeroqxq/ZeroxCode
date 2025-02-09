@@ -1,5 +1,6 @@
 #Main vars
 import os
+from random import randint,random
 com = 0
 vars = {}
 arg = 0
@@ -10,7 +11,7 @@ pr_temp = ""
 total_arg = ""
 input_text = ""
 bannedfunc = []
-def comiler(f):
+def compiler(f):
    if "compiler" in bannedfunc:
       raise Exception("Function banned")
    global redcom, npe , vars
@@ -51,7 +52,19 @@ def comiler(f):
                   elif len(args) == 4:
                      tof(args[0], args[1], args[2], args[3])
                elif func == "vars_clear":
-                  vars = {}
+                  vars.clear()
+               elif func == "ban":
+                  ban(args)
+               elif func == "flrand":
+                  if len(args) == 1:
+                     flrandom(args[0])
+                  else:
+                     flrandom()
+               elif func == "intrand":
+                  intrand(args[0],args[1],args[2])
+def ban(a : list):
+   for el in a:
+      bannedfunc.append(el)               
 def setvar(name , type , value):
    if "setvar" in bannedfunc:
       raise Exception("Function banned")
@@ -168,6 +181,16 @@ def tof(nov1 , s , nov2, vret="last_tof"):
       else:
          ret = False
    vars.update({vret : ret})
+def flrandom(c = "last_flrand"):
+   if "flrandom" in bannedfunc:
+      raise Exception("Function banned")
+   v = random()
+   vars.update({c:v})
+def intrand(sp,stp,vs = "last_intrand"):
+   st = int(st)
+   stp = int(stp)
+   it = randint(sp,stp)
+   vars.update({vs:it})
 os.system("cls")
 print("ZeroxCode v.0.0.3_alpha for x64")
 while True:
@@ -208,7 +231,7 @@ while True:
                   maxvar = max(temp2v, temp1v)
                   if maxvar in vars.values():
                         if maxvar == temp1v:
-                           print("Max variable: ", var1name , "Value: " , maxvar)
+                           print(f"Max variable: {var1name} Value: {maxvar} " )
                         elif maxvar == temp2v: 
                            print("Max variable: ", var2name , "Value: " , maxvar)
                   temp1v = ""
@@ -247,9 +270,9 @@ while True:
             print(f"Error. Procces: max_var. Description: {e}")
       elif com == "clear":
          os.system("cls")
-         print("ZeroxCode v.0.0.1_alpha for x64")
+         print("ZeroxCode v.0.0._alpha for x64")
       elif com == "vars_clear":
-         vars = {}
+         vars.clear()
       elif com == "exit":
          raise SystemExit(0)
       elif com == "math":
@@ -258,7 +281,7 @@ while True:
          n2 = input("number2>>")
       elif com == "open":
          path = input("path (replace \\ to \\\\)>> ")
-         comiler(path)
+         compiler(path)
       elif com == "tof":
          a1 = input("var1 or number1>>")
          csi = input("mark>>")
@@ -269,6 +292,14 @@ while True:
          while fb != "":
             fb = input("func_name>>")
             bannedfunc.append(fb)
+      elif com == "flrand":
+         r1 = input("var_save. If not required - enter>>")
+         flrandom(r1)
+      elif com == "intrand":
+         startp = input("start_point>>")
+         stopp = input("stop_point>>")
+         irvs = input("var_save. If not required - enter>>")
+         intrand(startp,stopp)
       else:
          print("Error[n002]: Incorrect name command")
    except SystemExit:
